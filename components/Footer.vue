@@ -104,7 +104,7 @@
 
       <!-- Copyright -->
       <div class="mt-12 pt-8 border-t border-gray-300 dark:border-gray-600">
-        <p class="footer-copyright">
+        <p class="text-center text-gray-400 dark:text-gray-600">
           &copy; {{ new Date().getFullYear() }} David Waring<br />
           All Rights Reserved
         </p>
@@ -135,9 +135,5 @@
     @apply text-base text-gray-400;
     @apply hover:text-gray-600;
     @apply dark:hover:text-gray-300;
-  }
-  .footer-copyright {
-    @apply text-center text-gray-400;
-    @apply dark:text-gray-600;
   }
 </style>
