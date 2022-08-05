@@ -1,5 +1,3 @@
-import { Prop } from "nuxt/dist/app/compat/capi";
-
 /**
  * Get the tags stored in the database
  * @param addAbout Flag to manually add an 'about' tag
@@ -8,7 +6,7 @@ import { Prop } from "nuxt/dist/app/compat/capi";
 export const useTags = async (addAbout?: boolean): Promise<Tag[]> => {
   const { getItems } = useDirectusItems();
   const items: Tag[] = [];
-  const tags: Tag[] = await getItems({collection: 'tags'});
+  const tags: Tag[] = await getItems({ collection: 'tags' });
   tags.forEach((tag) => {
     items.push({
       id: tag.id,
@@ -87,6 +85,19 @@ export const useProperties = async (key: string | string[] | undefined): Promise
   }
 }
 
+/**
+ * Get about information from the Database
+ * @returns About information
+ */
+export const useAbout = async (): Promise<About> => {
+  const { getSingletonItem } = useDirectusItems();
+  return await getSingletonItem({ 
+    collection: 'about',
+    params: {
+      fields: ['bio']
+    }
+  });
+}
 
 /**
  * Type of a Tag used in the website
@@ -122,4 +133,11 @@ type Property = {
  */
 type Properties = {
   [key: string]: string | undefined
+}
+
+/**
+ * Type of the About info
+ */
+type About = {
+  bio: string
 }
