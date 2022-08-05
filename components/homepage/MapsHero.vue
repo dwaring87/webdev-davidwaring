@@ -2,8 +2,8 @@
 <script setup>
   import RiCompass from '~icons/ri/compass-3-fill';
 
-  const manorvilleHills = await usePages('manorville-hills');
-  const rogers = await usePages('rogers');
+  const manorvilleHills = await usePage('manorville-hills');
+  const rogers = await usePage('rogers');
 </script>
 
 <template>

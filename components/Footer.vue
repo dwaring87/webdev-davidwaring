@@ -6,20 +6,12 @@
   import RiMail from '~icons/ri/mail-line';
 
   // Get Data from the CMS
-  const tags = await useTags();
-  const pages = await usePages();
   const properties = await useProperties();
-
-  // Get the pages for the specified tag
-  const pagesByTag = function(tag) {
-    let rtn = [];
-    pages.forEach((page) => {
-      if (page.tag.code === tag) {
-        rtn.push(page);
-      }
-    });
-    return rtn;
-  }
+  const tags = await useTags();
+  const pages = reactive({});
+  tags.forEach(async (tag) => {
+    pages[tag.code] = await usePagesByTag(tag.code);
+  });
 </script>
 
 <template>
@@ -80,7 +72,7 @@
 
             <!-- Page Links -->
             <ul role="list" class="footer-page-list">
-              <li v-for="page in pagesByTag(tag.code)" :key="page.id">
+              <li v-for="page in pages[tag.code]" :key="page.id">
                 <NuxtLink :to="`/${tag.code}/${page.slug}`" class="footer-page">
                   {{ page.title }}
                 </NuxtLink>

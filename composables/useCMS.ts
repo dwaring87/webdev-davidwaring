@@ -27,58 +27,102 @@ export const useTags = async (addAbout?: boolean): Promise<Tag[]> => {
 }
 
 /**
- * Get the metadata for the pages (or requested page) stored in the database
- * @param slug Slug of a single page to return
- * @returns Page Metadata for all of the pages or the requested page
+ * Get the specified tag stored in the database
+ * @param code Tag code to filter by
+ * @returns Specified tag stored in the database
  */
-export const usePages = async (slug?: string): Promise<Page|Page[]> => {
+export const useTag = async (code: string): Promise<Tag> => {
+  const { getItems } = useDirectusItems();
+  const tags: Tag[] = await getItems({
+    collection: 'tags',
+    params: {
+      filter: { code: code }
+    }
+  });
+  const item: Tag = {
+    id: tags[0].id,
+    code: tags[0].code,
+    name: tags[0].name,
+    path: `/${tags[0].code}/`
+  };
+  return item;
+}
+
+/**
+ * Get the metadata for the pages stored in the database
+ * @returns Page Metadata for all of the pages
+ */
+export const usePages = async (): Promise<Page[]> => {
   const { getItems } = useDirectusItems();
   const pages: Page[] = await getItems({
     collection: 'pages', 
     params: {
-      fields: ['id', 'title', 'description', 'slug', 'tag.code'],
-      filter: {
-        slug: slug
-      }
+      fields: ['id', 'title', 'description', 'slug', 'tag.code', 'image', 'links']
     }
   });
-  return slug && pages && pages.length === 1 ? pages[0] : pages;
+  return pages;
 }
 
 /**
- * Get the key/value pairs of the requested property or properties
- * @param key The key or array of keys to get 
+ * Get the metadata for the pages stored in the database, 
+ * associated with the specified Tag
+ * @param tag Tag Code
+ * @returns Page Metadata for pages associated with the specified Tag
+ */
+export const usePagesByTag = async (tag: string): Promise<Page[]> => {
+  // TODO: This would be better if the query could filter by the tag code
+  // instead of pulling out the matches from all of the pages, but the 
+  // nested filter doesn't seem to be working....
+  const pages = await usePages();
+  let rtn: Page[] = [];
+  pages.forEach((page) => {
+    if ( page.tag.code === tag ) {
+      rtn.push(page);
+    }
+  });
+  return rtn;
+}
+
+/**
+ * Get the metadata for the requested page stored in the database
+ * @param slug Page Slug
+ * @returns Page Metadata for the requested page
+ */
+export const usePage = async (slug: string): Promise<Page> => {
+  const { getItems } = useDirectusItems();
+  const pages: Page[] = await getItems({
+    collection: 'pages',
+    params: {
+      fields: ['id', 'title', 'description', 'slug', 'tag.code', 'image', 'links'],
+      filter: { slug: slug }
+    }
+  });
+  return pages[0];
+}
+
+/**
+ * Get the key/value pairs of the requested properties
+ * @param keys The array of keys to get (return all properties, if not defined)
  * @returns The value for a single property or an object of property key/values
  */
-export const useProperties = async (key: string | string[] | undefined): Promise<string|Properties> => {
-  let single = false;
-  if ( typeof key === 'string' ) {
-    key = [key];
-    single = true;
-  }
-
+export const useProperties = async (keys?: string[]): Promise<string|Properties> => {
   const { getItems } = useDirectusItems();
   const properties: Property[] = await getItems({
     collection: 'properties',
     params: {
       fields: ['key', 'value'],
       filter: {
-        key: key ? { "_in": key } : undefined
+        key: keys ? { "_in": keys } : undefined
       }
     }
   });
 
   if ( properties ) {
-    if ( single && properties.length === 1 ) {
-      return properties[0].value;
-    }
-    else {
-      let rtn: Properties = {};
-      properties.forEach((prop) => {
-        rtn[prop.key] = prop.value;
-      });
-      return rtn;
-    }
+    let rtn: Properties = {};
+    properties.forEach((prop) => {
+      rtn[prop.key] = prop.value;
+    });
+    return rtn;
   }
   else {
     return {};
@@ -131,7 +175,11 @@ type Page = {
   title: string,
   description: string,
   slug: string,
-  tag: string
+  tag: {
+    code: string
+  },
+  image: string,
+  links: Object[]
 }
 
 /**
