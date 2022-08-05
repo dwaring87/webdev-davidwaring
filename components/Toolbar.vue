@@ -2,33 +2,10 @@
   import RiMenu from '~icons/ri/menu-2-fill';
   import RiClose from '~icons/ri/close-fill';
   const route = useRoute();
-  const { getItems } = useDirectusItems();
-
-  // Get the Directus Tags
-  const tags = await getItems({collection: 'tags'});
-
-  // Define the Menu Items
-  const items = computed(function() {
-    let i = [];
-    tags.forEach(function(tag) {
-      i.push({
-        id: tag.id,
-        name: tag.name,
-        path: `/${tag.code}/`
-      });
-    });
-    i.push({
-      id: "about",
-      name: "About",
-      path: "/about"
-    });
-    return i;
-  });
+  const tags = await useTags(true);
 
   // Check if the menu item is the active route
-  const isActive = function(item) {
-    return route.path.startsWith(item.path);
-  }
+  const isActive = (tag) => route.path.startsWith(tag.path)
 
   // Flag for the Open/Close of the Mobile Menu
   const open = ref(false);
@@ -65,9 +42,9 @@
 
           <!-- Menu Items -->
           <div class="hidden md:ml-6 md:flex md:space-x-8">
-            <span v-for="item in items" :key="item.id" class="border-transparent inline-flex items-center px-1 pt-1 border-b-4 text-sm font-medium opacity-80 hover:opacity-100 hover:border-secondary" :class="{'border-secondary': isActive(item)}">
-              <NuxtLink :to="item.path">
-                {{ item.name }}
+            <span v-for="tag in tags" :key="tag.id" class="border-transparent inline-flex items-center px-1 pt-1 border-b-4 text-sm font-medium opacity-80 hover:opacity-100 hover:border-secondary" :class="{'border-secondary': isActive(tag)}">
+              <NuxtLink :to="tag.path">
+                {{ tag.name }}
               </NuxtLink>
             </span>
           </div>
@@ -80,9 +57,9 @@
     <!-- Mobile menu, show/hide based on menu state. -->
     <div v-if="open" class="md:hidden">
       <div class="pt-2 pb-4 space-y-1">
-        <span v-for="item in items" :key="item.id" class="border-transparent block pl-3 pr-4 py-2 border-l-4 text-base font-medium opacity-80 hover:opacity-100 hover:border-secondary" :class="{'border-secondary': isActive(item)}">
-          <NuxtLink :to="item.path">
-            {{ item.name }}
+        <span v-for="tag in tags" :key="tag.id" class="border-transparent block pl-3 pr-4 py-2 border-l-4 text-base font-medium opacity-80 hover:opacity-100 hover:border-secondary" :class="{'border-secondary': isActive(tag)}">
+          <NuxtLink :to="tag.path" @click="open = false">
+            {{ tag.name }}
           </NuxtLink>
         </span>
       </div>
