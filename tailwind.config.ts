@@ -9,7 +9,7 @@ export default <Config> {
       colors: {
         body: {
           background: {
-            DEFAULT: colors.gray['200'],
+            DEFAULT: colors.white,
             dark: colors.gray['900']
           },
           text: {

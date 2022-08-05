@@ -1,11 +1,15 @@
 <script setup>
   import RiMenu from '~icons/ri/menu-2-fill';
   import RiClose from '~icons/ri/close-fill';
-  const route = useRoute();
+  
+  // Get the Tags from the CMS
   const tags = await useTags(true);
 
   // Check if the menu item is the active route
-  const isActive = (tag) => route.path.startsWith(tag.path)
+  const route = useRoute();
+  const isActive = function(tag) {
+    return route.path.startsWith(tag.path);
+  }
 
   // Flag for the Open/Close of the Mobile Menu
   const open = ref(false);

@@ -33,9 +33,7 @@
       collection: 'images',
       params: {
         fields: 'image',
-        filter: {
-          key: props.name
-        }
+        filter: { key: props.name }
       }
     });
     fileId.value = i && i.length === 1 ? i[0].image : undefined;
