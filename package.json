@@ -7,10 +7,11 @@
     "preview": "nuxt preview"
   },
   "devDependencies": {
+    "@iconify-json/ri": "^1.1.3",
     "@nuxtjs/tailwindcss": "^5.3.1",
-    "nuxt": "3.0.0-rc.6"
+    "nuxt": "3.0.0-rc.6",
+    "nuxt-directus": "https://github.com/dwaring87/nuxt-directus#get-thumbnail-token",
+    "unplugin-icons": "^0.14.8"
   },
-  "dependencies": {
-    "nuxt-directus": "^2.4.0"
-  }
+  "dependencies": {}
 }

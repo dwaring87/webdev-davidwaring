@@ -1,3 +1,150 @@
 body {
-  @apply m-0 bg-gray-200;
+  @apply m-0 bg-body-background text-body-text;
+  @apply dark:bg-body-background-dark dark:text-body-text-dark;
+}
+
+h1 {
+  @apply text-4xl mb-2 tracking-tight font-extrabold;
+}
+h2 {
+  @apply text-2xl md:text-3xl mt-4 mb-2 font-bold leading-7;
+}
+h3 {
+  @apply text-xl md:text-2xl mt-4 mb-2 tracking-tight font-semibold;
+}
+h4 {
+  @apply text-lg md:text-xl leading-6 font-medium;
+}
+h1.border, h2.border, h3.border, h4.border {
+  @apply pb-4 border-t-0 border-l-0 border-r-0 border-b border-gray-200;
+  @apply dark:border-gray-400;
+}
+
+p.lead {
+  @apply text-lg text-gray-500;
+  @apply sm:text-xl;
+  @apply dark:text-gray-50;
+}
+
+a.btn {
+  @apply p-2 my-2 border border-transparent rounded-md shadow font-medium flex items-center justify-center;
+}
+a.btn-large {
+  @apply px-8 py-3;
+  @apply md:py-4 md:text-lg md:px-10;
+}
+a.btn-primary {
+  @apply text-primary-text bg-primary-light;
+  @apply hover:bg-gradient-to-b hover:from-primary-light hover:to-primary;
+  @apply dark:text-gray-900 dark:bg-secondary-light;
+  @apply dark:hover:bg-gradient-to-b dark:hover:from-secondary-light dark:hover:to-secondary;
+}
+a.btn-primary-outline {
+  @apply border border-primary-light text-primary bg-primary-text;
+  @apply hover:bg-gradient-to-b hover:from-gray-50 hover:to-gray-100;
+  @apply dark:border-secondary-light dark:text-secondary dark:bg-secondary-text;
+  @apply dark:hover:bg-gradient-to-b dark:hover:from-gray-800 to-gray-900;
+}
+
+div.card {
+  @apply max-w-lg mx-auto my-8 p-4 bg-white border border-gray-200 shadow-md rounded-md;
+  @apply lg:max-w-xl lg:px-8 lg:py-6;
+  @apply dark:bg-black dark:border-gray-600;
+}
+div.card-p-0 {
+  @apply p-0;
+}
+
+img.img-left {
+  @apply mx-auto rounded-md;
+  @apply md:float-left md:my-4 md:mr-4;
+}
+img.img-right {
+  @apply mx-auto rounded-md;
+  @apply md:float-right md:my-4 md:ml-4;
+}
+img.img-center {
+  @apply mx-auto my-4 rounded-md;
+  @apply md:max-w-xl;
+}
+
+div.content {
+  @apply w-full max-w-6xl mx-auto mt-4 px-4;
+}
+div.content h2 {
+  @apply mt-8;
+}
+div.content p {
+  @apply my-2;
+  @apply lg:my-4;
+}
+div.content p a:not(.btn), div.content ul a:not(.btn) {
+  @apply text-primary-light underline;
+  @apply hover:text-primary;
+  @apply dark:text-secondary-light;
+  @apply dark:hover:text-secondary;
+}
+div.content ul {
+  @apply list-disc ml-8 mb-4;
+  @apply lg:mb-8;
+}
+
+div.content pre {
+  @apply mt-3 p-2 bg-secondary-text text-primary-text border-l-8 border-primary-light rounded overflow-auto;
+  @apply dark:border-secondary dark:bg-gray-800;
+}
+div.content :not(pre) > code {
+  @apply bg-gray-200 p-1 rounded;
+  @apply dark:text-secondary-text;
+}
+
+blockquote {
+  @apply m-8 px-4 py-2 bg-gray-100 border-l-8 border-gray-200;
+  @apply dark:bg-gray-800;
+}
+
+/**
+* RTM Example Styles
+*/
+code.rtm .list {
+  @apply text-yellow-300 underline;
+}
+code.rtm .pri1 {
+  @apply text-red-500;
+}
+code.rtm .pri2 {
+  @apply text-blue-500;
+}
+code.rtm .pri3 {
+  @apply text-cyan-500;
+}
+code.rtm .date {
+  @apply text-lime-400;
+}
+code.rtm .tag {
+  @apply text-fuchsia-400;
+}
+
+/**
+* CSS TRANSITIONS
+* Used by the vue <transition> component
+*/
+
+/* Fade opacity */
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
+/* Slide from bottom */
+.slide-enter-active, .slide-leave-active {
+  transition: margin-bottom .5s ease-out;
+}
+.slide-enter, .slide-leave-to {
+  margin-bottom: -200px;
+}
+.slide-enter-to, .slide-leave {
+  margin-bottom: 0px;
 }
