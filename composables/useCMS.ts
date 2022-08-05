@@ -5,7 +5,7 @@ import { Prop } from "nuxt/dist/app/compat/capi";
  * @param addAbout Flag to manually add an 'about' tag
  * @returns Tags stored in the database
  */
-export const useTags = async (addAbout: boolean): Promise<Tag[]> => {
+export const useTags = async (addAbout?: boolean): Promise<Tag[]> => {
   const { getItems } = useDirectusItems();
   const items: Tag[] = [];
   const tags: Tag[] = await getItems({collection: 'tags'});
@@ -29,18 +29,22 @@ export const useTags = async (addAbout: boolean): Promise<Tag[]> => {
 }
 
 /**
- * Get the metadata for the pages stored in the database
- * @returns Page Metadata
+ * Get the metadata for the pages (or requested page) stored in the database
+ * @param slug Slug of a single page to return
+ * @returns Page Metadata for all of the pages or the requested page
  */
-export const usePages = async (): Promise<Page[]> => {
+export const usePages = async (slug?: string): Promise<Page|Page[]> => {
   const { getItems } = useDirectusItems();
   const pages: Page[] = await getItems({
     collection: 'pages', 
     params: {
-      fields: ['id', 'title', 'slug', 'tag.code']
+      fields: ['id', 'title', 'description', 'slug', 'tag.code'],
+      filter: {
+        slug: slug
+      }
     }
   });
-  return pages;
+  return slug && pages && pages.length === 1 ? pages[0] : pages;
 }
 
 /**
@@ -100,6 +104,7 @@ type Tag = {
 type Page = {
   id: string | number,
   title: string,
+  description: string,
   slug: string,
   tag: string
 }
