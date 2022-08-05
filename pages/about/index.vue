@@ -54,7 +54,7 @@
         </div>
 
         <div class="info text-center md:text-left">
-          <a href="/resume">
+          <a href="/about/resume">
             <RiFileList2 class="info-icon" />&nbsp;&nbsp;Resume
           </a>
         </div>

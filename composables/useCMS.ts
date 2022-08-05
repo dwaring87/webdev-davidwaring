@@ -100,6 +100,20 @@ export const useAbout = async (): Promise<About> => {
 }
 
 /**
+ * Get resume information from the Database
+ * @returns Resume information
+ */
+export const useResume = async (): Promise<Resume> => {
+  const { getSingletonItem } = useDirectusItems();
+  return await getSingletonItem({
+    collection: 'resume',
+    params: {
+      fields: ['content']
+    }
+  });
+}
+
+/**
  * Type of a Tag used in the website
  */
 type Tag = {
@@ -140,4 +154,11 @@ type Properties = {
  */
 type About = {
   bio: string
+}
+
+/**
+ * Type of Resume info
+ */
+type Resume = {
+  content: string
 }

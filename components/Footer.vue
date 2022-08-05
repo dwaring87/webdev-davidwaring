@@ -93,8 +93,8 @@
           <div>
             <h3 class="footer-tag">About</h3>
             <ul role="list" class="footer-page-list">
-              <li><NuxtLink to="/about" class="footer-page">Bio</NuxtLink></li>
-              <li><NuxtLink to="/resume" class="footer-page">Resume</NuxtLink></li>
+              <li><NuxtLink to="/about/" class="footer-page">Bio</NuxtLink></li>
+              <li><NuxtLink to="/about/resume" class="footer-page">Resume</NuxtLink></li>
             </ul>
           </div>
           
