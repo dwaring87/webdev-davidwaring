@@ -1,6 +1,10 @@
 <script setup>
   const { getResume } = useCMS();
-  const resume = await getResume();
+  const { data } = useAsyncData(async () => {
+    return {
+      resume: await getResume()
+    }
+  });
   
   useHead({
     title: 'Resume'
@@ -9,8 +13,8 @@
 
 <template>
   <div class="content mb-16">
-    <div class="max-w-2xl px-4 mx-auto">
-      <DirectusMarkdown id="resume" v-if="resume && resume.content" :md="resume.content" />
+    <div id="resume" class="max-w-2xl px-4 mx-auto">
+      <DirectusMarkdown v-if="data?.resume?.content" :md="data.resume.content" />
     </div>
   </div>
 </template>

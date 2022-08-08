@@ -23,14 +23,15 @@
       mdi.use(MarkdownItAttrs);
 
       // Render the markdown into HTML
-      let html = mdi.render(this.md);
+      // Replace image tags with DirctusImg tags
+      let rendered = mdi.render(this.md);
       let re = new RegExp('<img +src=[\'"].*/assets/([a-f0-9\-]+)[\'"](.*) />', 'g');
-      html = html.replace(re, "<DirectusImg hash='\$1' \$2 />");
+      rendered = rendered.replace(re, "<DirectusImg hash='\$1' \$2 />");
 
       // Return the rendered html as the component template
       // Include any custom components to render
       return h({
-        template: html,
+        template: `<div class='directus-markdown'>${rendered}</div>`,
         components: {
           DirectusImg
         }

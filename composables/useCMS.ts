@@ -58,33 +58,42 @@ export const useCMS = () => {
    * @returns Page Metadata for all of the pages
    */
   const getPages = async (): Promise<Page[]> => {
-    const pages: Page[] = await getItems({
+    return await getItems({
       collection: 'pages', 
       params: {
         fields: ['id', 'title', 'description', 'slug', 'tag.code', 'image', 'links']
       }
     });
-    return pages;
   }
 
   /**
-   * Get the metadata for the pages stored in the database, 
-   * associated with the specified Tag
-   * @param tag Tag Code
-   * @returns Page Metadata for pages associated with the specified Tag
+   * Get all of the pages associted with the specified tag, or if not
+   * specified, group the pages by tag code
+   * @param tag Tag code to filter by
+   * @returns 
    */
-  const getPagesByTag = async (tag: string): Promise<Page[]> => {
-    // TODO: This would be better if the query could filter by the tag code
-    // instead of pulling out the matches from all of the pages, but the 
-    // nested filter doesn't seem to be working....
-    const pages = await getPages();
-    let rtn: Page[] = [];
-    pages.forEach((page) => {
-      if ( page.tag.code === tag ) {
-        rtn.push(page);
+  const getPagesByTag = async (tag: string): Promise<Page[]|PagesByTag> => {
+    let pages: Page[] = await getItems({
+      collection: 'pages',
+      params: {
+        fields: ['id', 'title', 'description', 'slug', 'tag.code', 'image', 'links'],
+        filter: { 
+          tag: tag ? { code: tag } : undefined
+        }
       }
     });
-    return rtn;
+
+    if ( tag ) {
+      return pages;
+    }
+    else {
+      let rtn: PagesByTag = {};
+      pages.forEach((page) => {
+        if ( !rtn.hasOwnProperty(page.tag.code) ) rtn[page.tag.code] = [];
+        rtn[page.tag.code].push(page);
+      });
+      return rtn;
+    }
   }
 
   /**
@@ -180,14 +189,13 @@ export const useCMS = () => {
    * @returns URL to the image
    */
   const getImageURL = (hash: string, props?: ImageProperties ): string => {
-    let url = getThumbnail(hash, {
+    return getThumbnail(hash, {
       width: props?.width,
       height: props?.height,
       fit: props?.fit,
       format: props?.format,
       quality: props?.quality
     });
-    return url;
   }
 
   return {
@@ -228,6 +236,13 @@ type Page = {
   },
   image: string,
   links: Object[]
+}
+
+/**
+ * Collection of Pages grouped by Tag code
+ */
+type PagesByTag = {
+  [key: string]: Page[]
 }
 
 /**

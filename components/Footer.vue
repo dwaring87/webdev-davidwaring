@@ -7,11 +7,12 @@
   const { getProperties, getTags, getPagesByTag } = useCMS();
 
   // Get Data from the CMS
-  const properties = await getProperties();
-  const tags = await getTags();
-  const pages = reactive({});
-  tags.forEach(async (tag) => {
-    pages[tag.code] = await getPagesByTag(tag.code);
+  const { data } = await useAsyncData('footer', async () => {
+    return { 
+      properties: await getProperties(), 
+      tags: await getTags(), 
+      pages: await getPagesByTag() 
+    };
   });
 </script>
 
@@ -40,20 +41,20 @@
             <a href="https://www.righttrack.io" target="_blank">
               <RiTrain class="footer-info-icon" />&nbsp;&nbsp;righttrack.io
             </a>
-            <a :href="`mailto:${properties['contact']}`">
-              <RiMail class="footer-info-icon" />&nbsp;&nbsp;{{ properties['contact'] }}
+            <a :href="`mailto:${data.properties['contact']}`">
+              <RiMail class="footer-info-icon" />&nbsp;&nbsp;{{ data.properties['contact'] }}
             </a>
           </div>
 
           <!-- Social Links -->
           <div class="footer-info">
-            <a :href="`https://instagram.com/${properties['instagram']}`" target="_blank">
+            <a :href="`https://instagram.com/${data.properties['instagram']}`" target="_blank">
               <RiInstagram class="footer-info-icon" />&nbsp;&nbsp;@dwaring87
             </a>
-            <a :href="`https://github.com/${properties['github']}`" target="_blank">
+            <a :href="`https://github.com/${data.properties['github']}`" target="_blank">
               <RiGithub class="footer-info-icon" />&nbsp;&nbsp;@dwaring87
             </a>
-            <a :href="`https://github.com/${properties['github-right-track']}`" target="_blank">
+            <a :href="`https://github.com/${data.properties['github-right-track']}`" target="_blank">
               <RiGithub class="footer-info-icon" />&nbsp;&nbsp;@right-track
             </a>
           </div>
@@ -64,7 +65,7 @@
         <div class="mt-0 grid sm:grid-cols-2 sm:gap-8 md:grid-cols-3 lg:col-span-3">
             
           <!-- Pages -->
-          <div v-for="tag in tags" :key="tag.id">
+          <div v-for="tag in data.tags" :key="tag.id">
 
             <!-- Tag Name -->
             <h3 class="footer-tag">
@@ -73,7 +74,7 @@
 
             <!-- Page Links -->
             <ul role="list" class="footer-page-list">
-              <li v-for="page in pages[tag.code]" :key="page.id">
+              <li v-for="page in data.pages[tag.code]" :key="page.id">
                 <NuxtLink :to="`/${tag.code}/${page.slug}`" class="footer-page">
                   {{ page.title }}
                 </NuxtLink>

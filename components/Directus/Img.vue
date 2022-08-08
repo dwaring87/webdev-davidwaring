@@ -52,6 +52,5 @@
 </script>
 
 <template>
-  <img v-if="fileId" :src="url" 
-    :class="{'img-left': position === 'left', 'img-right': position === 'right', 'img-center': position ==='center'}" />
+  <img v-if="fileId" :src="url" :class="{'`img-${position}`': position }" />
 </template>

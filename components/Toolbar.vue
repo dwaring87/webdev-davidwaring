@@ -5,7 +5,11 @@
   const { getTags } = useCMS();
   
   // Get the Tags from the CMS
-  const tags = await getTags(true);
+  const { data } = await useAsyncData('toolbar', async () => {
+    return {
+      tags: await getTags(true)
+    };
+  });
 
   // Check if the menu item is the active route
   const isActive = function(tag) {
@@ -47,7 +51,7 @@
 
           <!-- Menu Items -->
           <div class="hidden md:ml-6 md:flex md:space-x-8">
-            <span v-for="tag in tags" :key="tag.id" class="border-transparent inline-flex items-center px-1 pt-1 border-b-4 text-sm font-medium opacity-80 hover:opacity-100 hover:border-secondary" :class="{'border-secondary': isActive(tag)}">
+            <span v-for="tag in data.tags" :key="tag.id" class="border-transparent inline-flex items-center px-1 pt-1 border-b-4 text-sm font-medium opacity-80 hover:opacity-100 hover:border-secondary" :class="{'border-secondary': isActive(tag)}">
               <NuxtLink :to="tag.path">
                 {{ tag.name }}
               </NuxtLink>
@@ -62,7 +66,7 @@
     <!-- Mobile menu, show/hide based on menu state. -->
     <div v-if="open" class="md:hidden">
       <div class="pt-2 pb-4 space-y-1">
-        <span v-for="tag in tags" :key="tag.id" class="border-transparent block pl-3 pr-4 py-2 border-l-4 text-base font-medium opacity-80 hover:opacity-100 hover:border-secondary" :class="{'border-secondary': isActive(tag)}">
+        <span v-for="tag in data.tags" :key="tag.id" class="border-transparent block pl-3 pr-4 py-2 border-l-4 text-base font-medium opacity-80 hover:opacity-100 hover:border-secondary" :class="{'border-secondary': isActive(tag)}">
           <NuxtLink :to="tag.path" @click="open = false">
             {{ tag.name }}
           </NuxtLink>

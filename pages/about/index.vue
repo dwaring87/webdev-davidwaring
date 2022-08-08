@@ -8,8 +8,12 @@
   import RiFileList2 from '~icons/ri/file-list-2-line';
   const { getAbout, getProperties } = useCMS();
 
-  const about = await getAbout();
-  const properties = await getProperties();
+  const { data } = useAsyncData(async () => {
+    return {
+      about: await getAbout(),
+      properties: await getProperties()
+    }
+  });
 
   useHead({
     title: 'About'
@@ -28,8 +32,8 @@
         <h3 class="text-center">David Waring</h3>
 
         <div class="info text-center md:text-left">
-          <a :href="properties['location-url']" target="_blank">
-            <RiMapPin class="info-icon" />&nbsp;&nbsp;{{ properties['location'] }}
+          <a :href="data.properties['location-url']" target="_blank">
+            <RiMapPin class="info-icon" />&nbsp;&nbsp;{{ data.properties['location'] }}
           </a>
           <a href="https://www.davidwaring.net" target="_blank">
             <RiLink class="info-icon" />&nbsp;&nbsp;davidwaring.net
@@ -37,19 +41,19 @@
           <a href="https://www.righttrack.io" target="_blank">
             <RiTrain class="info-icon" />&nbsp;&nbsp;righttrack.io
           </a>
-          <a :href="`mailto:${properties['contact']}`">
-            <RiMail class="info-icon" />&nbsp;&nbsp;{{ properties['contact'] }}
+          <a :href="`mailto:${data.properties['contact']}`">
+            <RiMail class="info-icon" />&nbsp;&nbsp;{{ data.properties['contact'] }}
           </a>
         </div>
 
         <div class="info text-center md:text-left">
-          <a :href="`https://instagram.com/${properties['instagram']}`" target="_blank">
+          <a :href="`https://instagram.com/${data.properties['instagram']}`" target="_blank">
             <RiInstagram class="info-icon" />&nbsp;&nbsp;@dwaring87
           </a>
-          <a :href="`https://github.com/${properties['github']}`" target="_blank">
+          <a :href="`https://github.com/${data.properties['github']}`" target="_blank">
             <RiGithub class="info-icon" />&nbsp;&nbsp;@dwaring87
           </a>
-          <a :href="`https://github.com/${properties['github-right-track']}`" target="_blank">
+          <a :href="`https://github.com/${data.properties['github-right-track']}`" target="_blank">
             <RiGithub class="info-icon" />&nbsp;&nbsp;@right-track
           </a>
         </div>
@@ -63,7 +67,7 @@
 
       <!-- Bio -->
       <div class="flex-grow">
-        <DirectusMarkdown v-if="about" :md="about.bio" />
+        <DirectusMarkdown v-if="data.about" :md="data.about.bio" />
       </div>
 
     </div>
