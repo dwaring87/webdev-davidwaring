@@ -1,5 +1,5 @@
 <script>
-  import { DirectusImg } from '#components';
+  import { DirectusImg, NuxtLink } from '#components';
   import MarkdownIt from 'markdown-it';
   import MarkdownItBracketedSpans from 'markdown-it-bracketed-spans';
   import MarkdownItAttrs from 'markdown-it-attrs';
@@ -33,7 +33,8 @@
       return h({
         template: `<div class='directus-markdown'>${rendered}</div>`,
         components: {
-          DirectusImg
+          DirectusImg,
+          NuxtLink
         }
       });
 

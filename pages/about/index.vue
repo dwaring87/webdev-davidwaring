@@ -8,7 +8,7 @@
   import RiFileList2 from '~icons/ri/file-list-2-line';
   const { getAbout, getProperties } = useCMS();
 
-  const { data } = useAsyncData(async () => {
+  const { data } = useAsyncData('about', async () => {
     return {
       about: await getAbout(),
       properties: await getProperties()

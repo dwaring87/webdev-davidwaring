@@ -5,7 +5,7 @@
   
   // Get the tag for the route
   const t = route.params.tag;
-  const { data } = useAsyncData(`tag-index-${t}`, async () => {
+  const { data } = useAsyncData(`tag-${t}`, async () => {
     return {
       tag: await getTag(t),
       pages: await getPagesByTag(t)

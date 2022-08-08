@@ -1,8 +1,12 @@
 import { DirectusThumbnailFit, DirectusThumbnailFormat } from "nuxt-directus/dist/runtime/types";
 
+const TAG_FIELDS = ['id', 'code', 'name'];
+const PAGE_FIELDS = ['id', 'title', 'description', 'slug', 'tag.code', 'image', 'links'];
+const PAGE_FIELDS_CONTENTS = PAGE_FIELDS.concat(['contents', 'photos.directus_files_id.id', 'photos.directus_files_id.title']);
+
 export const useCMS = () => {
   const { getItems, getSingletonItem } = useDirectusItems();
-  const { getThumbnail } = useDirectusFiles();
+  const { getFiles, getThumbnail } = useDirectusFiles();
 
   /**
    * Get the tags stored in the database and 
@@ -12,7 +16,13 @@ export const useCMS = () => {
    */
   const getTags = async (addAbout?: boolean): Promise<Tag[]> => {
     const items: Tag[] = [];
-    const tags: Tag[] = await getItems({ collection: 'tags' });
+    const tags: Tag[] = await getItems({ 
+      collection: 'tags',
+      params: {
+        fields: TAG_FIELDS
+      }
+    });
+
     tags.forEach((tag) => {
       items.push({
         id: tag.id,
@@ -38,12 +48,14 @@ export const useCMS = () => {
    * @returns Specified tag stored in the database
    */
   const getTag = async (code: string): Promise<Tag> => {
-    const tags: Tag[] = await getItems({
+    const tags: Tag[] = await getItems({ 
       collection: 'tags',
       params: {
+        fields: TAG_FIELDS,
         filter: { code: code }
       }
     });
+
     const item: Tag = {
       id: tags[0].id,
       code: tags[0].code,
@@ -61,14 +73,14 @@ export const useCMS = () => {
     return await getItems({
       collection: 'pages', 
       params: {
-        fields: ['id', 'title', 'description', 'slug', 'tag.code', 'image', 'links']
+        fields: PAGE_FIELDS
       }
     });
   }
 
   /**
-   * Get all of the pages associted with the specified tag, or if not
-   * specified, group the pages by tag code
+   * Get the metadata for all of the pages associted with the specified tag, 
+   * or if not specified, group the pages by tag code
    * @param tag Tag code to filter by
    * @returns 
    */
@@ -76,7 +88,7 @@ export const useCMS = () => {
     let pages: Page[] = await getItems({
       collection: 'pages',
       params: {
-        fields: ['id', 'title', 'description', 'slug', 'tag.code', 'image', 'links'],
+        fields: PAGE_FIELDS,
         filter: { 
           tag: tag ? { code: tag } : undefined
         }
@@ -99,13 +111,14 @@ export const useCMS = () => {
   /**
    * Get the metadata for the requested page stored in the database
    * @param slug Page Slug
+   * @param contents Flag to include page contents
    * @returns Page Metadata for the requested page
    */
-  const getPage = async (slug: string): Promise<Page> => {
+  const getPage = async (slug: string, contents?: boolean): Promise<Page> => {
     const pages: Page[] = await getItems({
       collection: 'pages',
       params: {
-        fields: ['id', 'title', 'description', 'slug', 'tag.code', 'image', 'links'],
+        fields: contents ? PAGE_FIELDS_CONTENTS : PAGE_FIELDS,
         filter: { slug: slug }
       }
     });
@@ -172,7 +185,7 @@ export const useCMS = () => {
    * @returns 
    */
   const getImage = async (key: string): Promise<Image> => {
-    let images: Image[] = await getItems({
+    const images: Image[] = await getItems({
       collection: 'images',
       params: {
         fields: ['image', 'key'],
@@ -198,6 +211,23 @@ export const useCMS = () => {
     });
   }
 
+  /**
+   * Get the metadata of the specified File
+   * @param hash File ID
+   * @returns Properties of the specified File
+   */
+  const getFile = async (hash: string): Promise<FileProperties> => {
+    const files: FileProperties[] = await getFiles({
+      params: {
+        fields: ['id', 'filename_disk', 'filesize', 'type', 'title', 'description', 'width', 'height'],
+        filter: {
+          id: hash
+        }
+      }
+    });
+    return files[0]
+  }
+
   return {
     getTags,
     getTag,
@@ -208,7 +238,8 @@ export const useCMS = () => {
     getAbout,
     getResume,
     getImage,
-    getImageURL
+    getImageURL,
+    getFile
   }
 
 }
@@ -235,7 +266,8 @@ type Page = {
     code: string
   },
   image: string,
-  links: Object[]
+  links: Object[],
+  contents?: string
 }
 
 /**
@@ -291,4 +323,15 @@ type ImageProperties = {
   fit?: DirectusThumbnailFit,
   format?: DirectusThumbnailFormat,
   quality?: number
+}
+
+type FileProperties = {
+  id: string,
+  filename_disk: string,
+  filesize: number
+  type: string,
+  title?: string,
+  description?: string,
+  width?: number,
+  height?: number
 }

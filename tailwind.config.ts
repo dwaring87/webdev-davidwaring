@@ -10,7 +10,7 @@ export default <Config> {
         body: {
           background: {
             DEFAULT: colors.white,
-            dark: colors.gray['900']
+            dark: colors.neutral['900']
           },
           text: {
             DEFAULT: colors.gray['900'],
