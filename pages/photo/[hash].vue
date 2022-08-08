@@ -5,7 +5,7 @@
   const { getFile } = useCMS();
   
   const hash = route.params.hash;
-  const { data } = useAsyncData(`photo-${hash}`, async () => {
+  const { data } = await useAsyncData(`photo-${hash}`, async () => {
     return {
       photo: await getFile(hash)
     }

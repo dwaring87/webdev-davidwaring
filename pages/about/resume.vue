@@ -1,6 +1,6 @@
 <script setup>
   const { getResume } = useCMS();
-  const { data } = useAsyncData('resume', async () => {
+  const { data } = await useAsyncData('resume', async () => {
     return {
       resume: await getResume()
     }

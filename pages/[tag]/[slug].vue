@@ -4,7 +4,7 @@
 
   const s = route.params.slug;
   const t = route.params.tag;
-  const { data, pending } = useAsyncData(`page-${t}-${s}`, async () => {
+  const { data } = await useAsyncData(`page-${t}-${s}`, async () => {
     return {
       tag: await getTag(t),
       page: await getPage(s, true)
@@ -17,7 +17,7 @@
 </script>
 
 <template>
-  <div v-if="!pending && data.page" class="content">
+  <div v-if="data?.page" class="content">
     
     <!-- Title -->
     <h1 class="border mb-0">{{ data.page.title }}</h1>

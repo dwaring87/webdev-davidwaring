@@ -15,7 +15,7 @@
     "markdown-it-attrs": "^4.1.4",
     "markdown-it-bracketed-spans": "^1.0.1",
     "nuxt": "3.0.0-rc.6",
-    "nuxt-directus": "https://github.com/dwaring87/nuxt-directus#get-thumbnail-token",
+    "nuxt-directus": "https://github.com/dwaring87/nuxt-directus",
     "nuxt-runtime-compiler": "^1.0.9",
     "unplugin-icons": "^0.14.8"
   },
