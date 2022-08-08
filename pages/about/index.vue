@@ -6,9 +6,10 @@
   import RiTrain from '~icons/ri/train-line';
   import RiMail from '~icons/ri/mail-line';
   import RiFileList2 from '~icons/ri/file-list-2-line';
+  const { getAbout, getProperties } = useCMS();
 
-  const about = await useAbout();
-  const properties = await useProperties();
+  const about = await getAbout();
+  const properties = await getProperties();
 
   useHead({
     title: 'About'

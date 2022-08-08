@@ -1,11 +1,12 @@
 <script setup>
   import RiRight from '~icons/ri/arrow-right-fill';
+  const route = useRoute();
+  const { getTag, getPagesByTag } = useCMS();
   
   // Get the tag for the route
-  const route = useRoute();
   const t = route.params.tag;
-  const tag = await useTag(t);
-  const pages = await usePagesByTag(t);
+  const tag = await getTag(t);
+  const pages = await getPagesByTag(t);
 
   useHead({
     title: tag.name

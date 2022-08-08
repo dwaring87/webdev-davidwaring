@@ -4,13 +4,14 @@
   import RiLink from '~icons/ri/link';
   import RiTrain from '~icons/ri/train-line';
   import RiMail from '~icons/ri/mail-line';
+  const { getProperties, getTags, getPagesByTag } = useCMS();
 
   // Get Data from the CMS
-  const properties = await useProperties();
-  const tags = await useTags();
+  const properties = await getProperties();
+  const tags = await getTags();
   const pages = reactive({});
   tags.forEach(async (tag) => {
-    pages[tag.code] = await usePagesByTag(tag.code);
+    pages[tag.code] = await getPagesByTag(tag.code);
   });
 </script>
 

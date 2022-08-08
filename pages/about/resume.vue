@@ -1,5 +1,6 @@
 <script setup>
-  const resume = await useResume();
+  const { getResume } = useCMS();
+  const resume = await getResume();
   
   useHead({
     title: 'Resume'

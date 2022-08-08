@@ -1,6 +1,5 @@
 <script setup>
-  const { getItems } = useDirectusItems();
-  const { getThumbnail } = useDirectusFiles();
+  const { getImage, getImageURL } = useCMS();
 
   // Set the props
   // Name or Hash required
@@ -29,14 +28,8 @@
   // Define the image file id (uuid of file on Directus)
   const fileId = ref(null);
   if ( props.name ) {
-    const i = await getItems({
-      collection: 'images',
-      params: {
-        fields: 'image',
-        filter: { key: props.name }
-      }
-    });
-    fileId.value = i && i.length === 1 ? i[0].image : undefined;
+    const i = await getImage(props.name);
+    fileId.value = i?.image;
   }
   else if ( props.hash ) {
     fileId.value = props.hash
@@ -46,8 +39,8 @@
   }
 
   // Compute the URL
-  const url = computed(function() {
-    return getThumbnail(fileId.value, {
+  const url = computed(() => {
+    return getImageURL(fileId.value, {
       width: props.width ? parseFloat(props.width) : undefined,
       height: props.height ? parseFloat(props.height) : undefined,
       fit: props.fit,

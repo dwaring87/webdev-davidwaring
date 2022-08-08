@@ -1,12 +1,13 @@
 <script setup>
   import RiMenu from '~icons/ri/menu-2-fill';
   import RiClose from '~icons/ri/close-fill';
+  const route = useRoute();
+  const { getTags } = useCMS();
   
   // Get the Tags from the CMS
-  const tags = await useTags(true);
+  const tags = await getTags(true);
 
   // Check if the menu item is the active route
-  const route = useRoute();
   const isActive = function(tag) {
     return route.path.startsWith(tag.path);
   }
