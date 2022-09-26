@@ -14,10 +14,9 @@
     "markdown-it": "^13.0.1",
     "markdown-it-attrs": "^4.1.4",
     "markdown-it-bracketed-spans": "^1.0.1",
-    "nuxt": "3.0.0-rc.6",
-    "nuxt-directus": "https://github.com/dwaring87/nuxt-directus",
+    "nuxt": "^3.0.0-rc.11",
+    "nuxt-directus": "^3.0.3",
     "nuxt-runtime-compiler": "^1.0.9",
     "unplugin-icons": "^0.14.8"
-  },
-  "dependencies": {}
+  }
 }
