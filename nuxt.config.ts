@@ -1,4 +1,3 @@
-import { defineNuxtConfig } from 'nuxt';
 import Icons from 'unplugin-icons/vite';
 
 export default defineNuxtConfig({
