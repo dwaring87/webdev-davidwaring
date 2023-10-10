@@ -1,12 +1,11 @@
 {
   "private": true,
   "scripts": {
-    "dev": "npx nuxi dev",
-    "build": "npx nuxi build",
-    "preview": "npx nuxi preview",
-    "build:static": "npx nuxi generate",
-    "preview:static": "npx http-server dist/",
-    "clean": "npx nuxi cleanup"
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
   },
   "devDependencies": {
     "@iconify-json/ri": "^1.1.3",
