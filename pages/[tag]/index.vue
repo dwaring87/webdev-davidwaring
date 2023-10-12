@@ -23,7 +23,7 @@
 
     <div v-for="page in data.pages" :key="page.id" class="card card-p-0">
       <div class="h-[200px]">
-        <DirectusImg v-if="page.image" :hash="page.image"  class="rounded-t-md w-full max-h-[200px] object-cover object-top" width="1000" quality="100" />
+        <DirectusImg v-if="page.image" :src="page.image" class="rounded-t-md w-full max-h-[200px] object-cover object-top" width="1000" quality="100" />
       </div>
       <div class="px-4">
         <h3 class="mt-4">{{ page.title }}</h3>

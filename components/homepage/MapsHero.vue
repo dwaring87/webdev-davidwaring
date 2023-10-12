@@ -1,10 +1,23 @@
 
 <script setup>
   import RiCompass from '~icons/ri/compass-3-fill';
-  const { getPage } = useCMS();
+  const { getPage, getImage } = useCMS();
 
-  const manorvilleHills = await getPage('manorville-hills');
-  const rogers = await getPage('rogers');
+  // Get Descriptions
+  const { data:manorvilleHills } = await useAsyncData('manorville-hills', async () => {
+    return await getPage('manorville-hills');
+  });
+  const { data:rogers } = await useAsyncData('rogers', async () => {
+    return await getPage('rogers');
+  });
+
+  // Get Image IDs
+  const { data:manorvilleHillsHero } = await useAsyncData('manorville-hills-hero', async () => {
+    return await getImage('manorville-hills-hero');
+  });
+  const { data:rogersHero } = await useAsyncData('rogers-hero', async () => {
+    return await getImage('rogers-hero');
+  });
 </script>
 
 <template>
@@ -25,7 +38,7 @@
       <!-- Manorville Hills -->
       <div class="card card-p-0 w-full">
         <div class="h-[200px]">
-          <DirectusImg name="manorville-hills-hero" width="600" quality="100" class="rounded-t-md w-full max-h-[200px] object-cover object-top" />
+          <DirectusImg :src="manorvilleHillsHero" width="600" quality="100" class="rounded-t-md w-full max-h-[200px] object-cover object-top" />
         </div>
         <div class="px-4">
           <h2 class="mt-4">Manorville Hills</h2>
@@ -41,7 +54,7 @@
       <!-- Rogers Center -->
       <div class="card card-p-0 w-full">
         <div class="h-[200px]">
-          <DirectusImg name="rogers-hero" width="600" quality="100" class="rounded-t-md w-full max-h-[200px] object-cover object-bottom" />
+          <DirectusImg :src="rogersHero" width="600" quality="100" class="rounded-t-md w-full max-h-[200px] object-cover object-bottom" />
         </div>
         <div class="px-4">
           <h2 class="mt-4">Rogers Center</h2>

@@ -24,7 +24,7 @@
 <template>
   <div class="bg-black">
     <div @click="caption_displayed = !caption_displayed">
-      <DirectusImg class="w-screen h-screen mx-auto my-auto object-contain" :hash="hash" />
+      <DirectusImg :src="hash" class="w-screen h-screen mx-auto my-auto object-contain" />
     </div>
     <transition name="slide">
       <div v-if="caption_displayed" class="fixed bottom-0 w-full bg-white bg-opacity-80 p-4 dark:bg-black dark:bg-opacity-60">

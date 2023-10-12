@@ -180,11 +180,11 @@ export const useCMS = () => {
   }
 
   /**
-   * Get the information of named Images from the Database
+   * Get the image id of named Image from the Database
    * @param key name/key of the image
    * @returns 
    */
-  const getImage = async (key: string): Promise<Image> => {
+  const getImage = async (key: string): Promise<String> => {
     const images: Image[] = await getItems({
       collection: 'images',
       params: {
@@ -192,23 +192,7 @@ export const useCMS = () => {
         filter: { key: key }
       }
     });
-    return images[0];
-  }
-
-  /**
-   * Get a URL to an image with the specified properties from the Database
-   * @param hash Image Hash / File ID
-   * @param props Image Properties
-   * @returns URL to the image
-   */
-  const getImageURL = (hash: string, props?: ImageProperties ): string => {
-    return getThumbnail(hash, {
-      width: props?.width,
-      height: props?.height,
-      fit: props?.fit,
-      format: props?.format,
-      quality: props?.quality
-    });
+    return images[0]?.image;
   }
 
   /**
@@ -238,7 +222,6 @@ export const useCMS = () => {
     getAbout,
     getResume,
     getImage,
-    getImageURL,
     getFile
   }
 
@@ -311,7 +294,7 @@ type Resume = {
  */
 type Image = { 
   key: string,
-  fileId: string
+  image: string
 }
 
 /**

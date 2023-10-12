@@ -1,7 +1,7 @@
-<script setup lang="ts">
-  const BASE_TITLE: string = "David Waring";
+<script setup>
+  const BASE_TITLE = "David Waring";
   useHead({
-    titleTemplate: function(title: string) {
+    titleTemplate: (title) => {
       return title && title.includes(BASE_TITLE) ? title : title ? `${BASE_TITLE} - ${title}` : BASE_TITLE;
     },
     viewport: 'width=device-width, initial-scale=1, maximum-scale=1',

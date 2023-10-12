@@ -6,7 +6,7 @@ export default defineNuxtConfig({
     strict: true
   },
 
-  modules: ['@nuxtjs/tailwindcss', 'nuxt-directus', 'nuxt-runtime-compiler'],
+  modules: ['@nuxtjs/tailwindcss', 'nuxt-image-directus', 'nuxt-directus', 'nuxt-runtime-compiler'],
 
   vite: {
     plugins: [
@@ -14,6 +14,11 @@ export default defineNuxtConfig({
         autoInstall: true
       })
     ],
+  },
+
+  nuxtImageDirectus: {
+    baseURL: process.env.DIRECTUS_URL,
+    token: process.env.DIRECTUS_TOKEN
   },
 
   directus: {

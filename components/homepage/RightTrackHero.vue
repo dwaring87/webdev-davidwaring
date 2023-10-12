@@ -1,9 +1,26 @@
+<script setup>
+  const { getImage } = useCMS();
+
+  const { data:rtLogo } = await useAsyncData('rt-logo', async () => {
+    return await getImage('rt-logo');
+  });
+  const { data:rtMnrTrain } = await useAsyncData('rt-mnr-train', async () => {
+    return await getImage('rt-mnr-train');
+  });
+  const { data:rtLirrTrain } = await useAsyncData('rt-lirr-train', async () => {
+    return await getImage('rt-lirr-train');
+  });
+  const { data:rtHero } = await useAsyncData('rt-hero', async () => {
+    return await getImage('rt-hero');
+  });
+</script>
+
 <template>
   <div class="pt-8 pb-20 px-4 flex flex-col md:px-24 lg:flex-row lg:px-0 lg:mx-auto lg:max-w-7xl">
     <div class="mx-auto w-full text-center pb-8 lg:pb-0 lg:text-left">
       <div class="sm:px-8">
         <div class="w-full">
-          <DirectusImg name="rt-logo" class="mx-auto mb-8 max-w-[75px] md:max-w-[100px] lg:max-w-[150px]" width="150" />
+          <DirectusImg :src="rtLogo" class="mx-auto mb-8 max-w-[75px] md:max-w-[100px] lg:max-w-[150px]" width="150" />
         </div>
         <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl">
           <span class="inline">Right Track</span>&nbsp;
@@ -17,10 +34,10 @@
         </p>
         <ul class="list-oustside">
           <li class="mt-4 text-rt-mnr font-semibold dark:text-gray-100">
-            <DirectusImg name="rt-mnr-train" class="inline pr-4" width="50" />Metro North Railroad
+            <DirectusImg :src="rtMnrTrain" class="inline pr-4" width="50" />Metro North Railroad
           </li>
           <li class="mt-4 text-rt-lirr font-semibold dark:text-gray-100">
-            <DirectusImg name="rt-lirr-train" class="inline pr-4" width="50" />Long Island Rail Road
+            <DirectusImg :src="rtLirrTrain" class="inline pr-4" width="50" />Long Island Rail Road
           </li>
         </ul>
         <div class="mt-10 sm:flex sm:justify-center lg:justify-start">
@@ -38,7 +55,7 @@
       </div>
     </div>
     <div class="w-full h-full lg:my-auto lg:pr-8">
-      <DirectusImg name="rt-hero" width="964" />
+      <DirectusImg :src="rtHero" width="964" />
     </div>
   </div>
 </template>

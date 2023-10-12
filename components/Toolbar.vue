@@ -2,13 +2,18 @@
   import RiMenu from '~icons/ri/menu-2-fill';
   import RiClose from '~icons/ri/close-fill';
   const route = useRoute();
-  const { getTags } = useCMS();
+  const { getTags, getImage } = useCMS();
   
   // Get the Tags from the CMS
   const { data } = await useAsyncData('toolbar', async () => {
     return {
       tags: await getTags(true)
     };
+  });
+
+  // Get Image IDs
+  const { data:toolbarLogo } = await useAsyncData('toolbar-logo', async () => {
+    return await getImage('toolbar-logo');
   });
 
   // Check if the menu item is the active route
@@ -42,7 +47,7 @@
           <!-- Logo / Title -->
           <div class="flex md:flex-grow items-center">
             <NuxtLink to='/'>
-              <DirectusImg name="toolbar-logo" class="max-w-[36px] max-h-[36px] rounded-full shadow-md align-middle border-none" width="64" height="64" quality="100" />
+              <DirectusImg :src="toolbarLogo" class="max-w-[36px] max-h-[36px] rounded-full shadow-md align-middle border-none" width="64" height="64" quality="100" />
             </NuxtLink>
             <NuxtLink to='/'>
               <span class="px-4"><strong>David Waring</strong></span>

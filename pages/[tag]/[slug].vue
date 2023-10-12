@@ -36,7 +36,7 @@
           <div class="flex flex-row flex-wrap justify-evenly items-start">
             <div class="flex flex-col items-center" v-for="photo in data.page.photos" :key="photo.directus_files_id.id">
               <NuxtLink :to="`/photo/${photo.directus_files_id.id}`">
-                <DirectusImg class="cursor-pointer border-2 border-white rounded-md shadow-md m-4 max-w-[250px] dark:border-gray-600" :hash="photo.directus_files_id.id" width="250" />
+                <DirectusImg :src="photo.directus_files_id.id" class="cursor-pointer border-2 border-white rounded-md shadow-md m-4 max-w-[250px] dark:border-gray-600" width="250" />
               </NuxtLink>
               <p class="text-gray-400 text-sm max-w-[250px] lg:max-w-[300px]" style="margin-top: -5px; margin-bottom: 25px">{{ photo.directus_files_id.title }}</p>
             </div>

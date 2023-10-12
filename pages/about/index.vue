@@ -6,13 +6,18 @@
   import RiTrain from '~icons/ri/train-line';
   import RiMail from '~icons/ri/mail-line';
   import RiFileList2 from '~icons/ri/file-list-2-line';
-  const { getAbout, getProperties } = useCMS();
+  const { getAbout, getProperties, getImage } = useCMS();
 
   const { data } = await useAsyncData('about', async () => {
     return {
       about: await getAbout(),
       properties: await getProperties()
     }
+  });
+
+  // Get Image IDs
+  const { data:profile } = await useAsyncData('profile', async () => {
+    return await getImage('profile');
   });
 
   useHead({
@@ -27,7 +32,7 @@
 
       <!-- Basic Info -->
       <div class="space-y-4 whitespace-nowrap mb-12">
-        <DirectusImg name="profile" class="max-w-[150px] sm:max-w-[250px] md:max-w-[150px] lg:max-w-[250px] lg:border-4 mx-auto rounded-full border-2 border-white shadow-strong" width="250" quality="100" />
+        <DirectusImg :src="profile" class="max-w-[150px] sm:max-w-[250px] md:max-w-[150px] lg:max-w-[250px] lg:border-4 mx-auto rounded-full border-2 border-white shadow-strong" width="250" quality="100" />
 
         <h3 class="text-center">David Waring</h3>
 
