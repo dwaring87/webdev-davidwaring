@@ -6,7 +6,7 @@ export default defineNuxtConfig({
     strict: true
   },
 
-  modules: ['@nuxtjs/tailwindcss', 'nuxt-image-directus', 'nuxt-directus', 'nuxt-runtime-compiler'],
+  modules: ['@nuxtjs/tailwindcss', '@nuxtjs/plausible', 'nuxt-image-directus', 'nuxt-directus', 'nuxt-runtime-compiler'],
 
   vite: {
     plugins: [
@@ -14,6 +14,14 @@ export default defineNuxtConfig({
         autoInstall: true
       })
     ],
+  },
+
+  plausible: {
+    domain: process.env.PLAUSIBLE_DOMAIN,
+    apiHost: process.env.PLAUSIBLE_HOST,
+    autoPageviews: true,
+    hashMode: true,
+    trackLocalhost: false
   },
 
   nuxtImageDirectus: {
