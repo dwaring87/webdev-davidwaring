@@ -26,7 +26,8 @@ export default defineNuxtConfig({
 
   nuxtImageDirectus: {
     baseURL: process.env.DIRECTUS_URL,
-    token: process.env.DIRECTUS_TOKEN
+    token: process.env.DIRECTUS_TOKEN,
+    output_dir: process.env.NUXT_IMAGE_DIRECTUS_OUTPUT_DIR
   },
 
   directus: {
