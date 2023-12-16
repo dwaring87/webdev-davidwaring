@@ -6,7 +6,7 @@ const PAGE_FIELDS_CONTENTS = PAGE_FIELDS.concat(['contents', 'photos.directus_fi
 
 export const useCMS = () => {
   const { getItems, getSingletonItem } = useDirectusItems();
-  const { getFiles, getThumbnail } = useDirectusFiles();
+  const { getFiles } = useDirectusFiles();
 
   /**
    * Get the tags stored in the database and 

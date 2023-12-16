@@ -5,10 +5,9 @@
   const s = route.params.slug;
   const t = route.params.tag;
   const { data } = await useAsyncData(`page-${t}-${s}`, async () => {
-    return {
-      tag: await getTag(t),
-      page: await getPage(s, true)
-    }
+    const tag = await getTag(t);
+    const page = await getPage(s, true);
+    return { tag, page };
   });
 
   useHead({
