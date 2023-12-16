@@ -5,23 +5,19 @@
   
   // Get the tag for the route
   const t = route.params.tag;
-  const { data } = await useAsyncData(`tag-${t}`, async () => {
-    return {
-      tag: await getTag(t),
-      pages: await getPagesByTag(t)
-    }
-  });
+  const { data:tag } = await useAsyncData(`tag-${t}`, async () => await getTag(t));
+  const { data:pages } = await useAsyncData(`pages-tag-${t}`, async () => await getPagesByTag(t));
 
   useHead({
-    title: data && data.value ? data.value.tag.name : ''
+    title: tag && tag.value ? tag.value.name : ''
   });
 </script>
 
 <template>
-  <div class="content mb-16">
-    <h1 class="border mb-8">{{ data?.tag?.name }}</h1>
+  <div v-if="tag && pages" class="content mb-16">
+    <h1 class="border mb-8">{{ tag.name }}</h1>
 
-    <div v-for="page in data?.pages" :key="page.id" class="card card-p-0">
+    <div v-for="page in pages" :key="page.id" class="card card-p-0">
       <div class="h-[200px]">
         <DirectusImg :src="page.image" class="rounded-t-md w-full max-h-[200px] object-cover object-top" width="1000" quality="100" />
       </div>
@@ -34,7 +30,7 @@
           <LinkButton v-if="link.card" :link="link" :key="link.url" />
         </template>
         <div class="flex-grow"></div>
-        <NuxtLink :to="`/${data.tag.code}/${page.slug}`" class="btn btn-primary">
+        <NuxtLink :to="`/${tag.code}/${page.slug}`" class="btn btn-primary">
           Read&nbsp;&nbsp;<RiRight />
         </NuxtLink>
       </div>
