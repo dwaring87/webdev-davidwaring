@@ -18,12 +18,12 @@
 </script>
 
 <template>
-  <div v-if="data?.tag" class="content mb-16">
-    <h1 class="border mb-8">{{ data.tag.name }}</h1>
+  <div class="content mb-16">
+    <h1 class="border mb-8">{{ data?.tag?.name }}</h1>
 
-    <div v-for="page in data.pages" :key="page.id" class="card card-p-0">
+    <div v-for="page in data?.pages" :key="page.id" class="card card-p-0">
       <div class="h-[200px]">
-        <DirectusImg v-if="page.image" :src="page.image" class="rounded-t-md w-full max-h-[200px] object-cover object-top" width="1000" quality="100" />
+        <DirectusImg :src="page.image" class="rounded-t-md w-full max-h-[200px] object-cover object-top" width="1000" quality="100" />
       </div>
       <div class="px-4">
         <h3 class="mt-4">{{ page.title }}</h3>
