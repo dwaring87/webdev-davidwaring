@@ -1,4 +1,4 @@
-import { DirectusThumbnailFit, DirectusThumbnailFormat } from "nuxt-directus/dist/runtime/types";
+import type { DirectusThumbnailFit, DirectusThumbnailFormat } from "nuxt-directus";
 
 const TAG_FIELDS = ['id', 'code', 'name'];
 const PAGE_FIELDS = ['id', 'title', 'description', 'slug', 'tag.code', 'image', 'links'];

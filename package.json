@@ -15,7 +15,7 @@
     "markdown-it-attrs": "^4.1.4",
     "markdown-it-bracketed-spans": "^1.0.1",
     "nuxt": "^3.7.4",
-    "nuxt-directus": "^5.5.0",
+    "nuxt-directus": "^5.7.0",
     "nuxt-image-directus": "^1.0.6",
     "nuxt-runtime-compiler": "^1.0.9",
     "unplugin-icons": "^0.17.0"
